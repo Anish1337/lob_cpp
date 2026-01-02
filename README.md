@@ -135,7 +135,7 @@ ctest --output-on-failure
 Tests cover order book operations, matching logic, order types, allocator functionality, and edge cases.
 
 ## Future Enhancements
-
+- [ ] Fix IOC/FOK implementation and benchmarks.
 - [ ] More order types (stop orders, trailing stops)
 - [ ] Order book visualization
 - [ ] Network protocol for order submission
