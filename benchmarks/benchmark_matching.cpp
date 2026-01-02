@@ -45,46 +45,6 @@ static void BM_MatchMarketOrders(benchmark::State& state) {
 }
 BENCHMARK(BM_MatchMarketOrders)->Arg(10)->Arg(100)->Arg(1000)->Unit(benchmark::kMicrosecond);
 
-static void BM_MatchIOCOrders(benchmark::State& state) {
-    lob::MatchingEngine engine;
-    
-    // Pre-populate with resting orders
-    for (lob::OrderId id = 1; id <= 100; ++id) {
-        engine.submit_order(id, lob::Side::Sell, lob::OrderType::Limit, 
-                           100 + (id % 10), 10);
-    }
-    
-    lob::OrderId new_id = 10000;
-    for (auto _ : state) {
-        benchmark::DoNotOptimize(
-            engine.submit_order(new_id++, lob::Side::Buy, lob::OrderType::IOC, 
-                               105, 5)
-        );
-    }
-    state.SetItemsProcessed(state.iterations());
-}
-BENCHMARK(BM_MatchIOCOrders)->Unit(benchmark::kMicrosecond);
-
-static void BM_MatchFOKOrders(benchmark::State& state) {
-    lob::MatchingEngine engine;
-    
-    // Pre-populate with resting orders
-    for (lob::OrderId id = 1; id <= 100; ++id) {
-        engine.submit_order(id, lob::Side::Sell, lob::OrderType::Limit, 
-                           100 + (id % 10), 10);
-    }
-    
-    lob::OrderId new_id = 10000;
-    for (auto _ : state) {
-        benchmark::DoNotOptimize(
-            engine.submit_order(new_id++, lob::Side::Buy, lob::OrderType::FOK, 
-                               105, 5)
-        );
-    }
-    state.SetItemsProcessed(state.iterations());
-}
-BENCHMARK(BM_MatchFOKOrders)->Unit(benchmark::kMicrosecond);
-
 static void BM_Throughput_MixedOrders(benchmark::State& state) {
     lob::MatchingEngine engine;
     
@@ -97,7 +57,7 @@ static void BM_Throughput_MixedOrders(benchmark::State& state) {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> side_dist(0, 1);
-    std::uniform_int_distribution<int> type_dist(0, 3);
+    std::uniform_int_distribution<int> type_dist(0, 1);  // Only Limit (0) and Market (1), excluding IOC/FOK
     std::uniform_int_distribution<lob::Price> price_dist(95, 105);
     std::uniform_int_distribution<lob::Quantity> qty_dist(1, 20);
     
