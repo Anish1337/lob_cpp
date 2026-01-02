@@ -8,7 +8,14 @@ if(NOT benchmark_FOUND)
         GIT_REPOSITORY https://github.com/google/benchmark.git
         GIT_TAG v1.8.3
     )
-    FetchContent_MakeAvailable(googlebenchmark)
+    FetchContent_GetProperties(googlebenchmark)
+    if(NOT googlebenchmark_POPULATED)
+        # Disable GoogleTest to avoid CMake compatibility issues
+        set(BENCHMARK_ENABLE_TESTING OFF CACHE BOOL "" FORCE)
+        set(BENCHMARK_ENABLE_GTEST_TESTS OFF CACHE BOOL "" FORCE)
+        FetchContent_Populate(googlebenchmark)
+        add_subdirectory(${googlebenchmark_SOURCE_DIR} ${googlebenchmark_BINARY_DIR} EXCLUDE_FROM_ALL)
+    endif()
     set(benchmark_LIBRARIES benchmark::benchmark benchmark::benchmark_main)
 endif()
 

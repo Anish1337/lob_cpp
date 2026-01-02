@@ -86,5 +86,3 @@ static void BM_AllocatorReuse(benchmark::State& state) {
 }
 BENCHMARK(BM_AllocatorReuse)->Unit(benchmark::kNanosecond);
 
-BENCHMARK_MAIN();
-

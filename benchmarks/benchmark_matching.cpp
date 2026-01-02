@@ -131,5 +131,3 @@ static void BM_PriceTimePriority(benchmark::State& state) {
 }
 BENCHMARK(BM_PriceTimePriority)->Arg(10)->Arg(100)->Arg(1000)->Unit(benchmark::kMicrosecond);
 
-BENCHMARK_MAIN();
-

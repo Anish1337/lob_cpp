@@ -147,5 +147,3 @@ static void BM_DepthAtPrice(benchmark::State& state) {
 }
 BENCHMARK(BM_DepthAtPrice)->Unit(benchmark::kNanosecond);
 
-BENCHMARK_MAIN();
-
