@@ -1,6 +1,6 @@
 # Limit Order Book & Matching Engine (C++23)
 
-A high-performance limit order book and matching engine implementation in C++23, featuring a custom slab allocator and price-time priority matching.
+A high-performance C++23 central limit order book and matching engine with price-time priority execution and a custom slab allocator.
 
 ## Quick Start
 
